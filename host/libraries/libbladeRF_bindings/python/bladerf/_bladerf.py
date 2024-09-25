@@ -673,6 +673,23 @@ class BladeRF:
         _check_error(ret)
         return [ffi.string(stages_arr[i]).decode() for i in range(ret)]
 
+    # Feature
+    
+    def set_feature(self, feature :int = 0, enable: bool = True):
+        """
+        Enable or disable a specific feature on the device.
+
+        Args:
+        - feature: The feature to enable or disable (bladerf_feature enum) - 0 for Default, 1 for Oversample.
+        - enable: True to enable, False to disable.
+        
+        Returns:
+        - 0 on success, an error code otherwise.
+        """
+        ret = libbladeRF.bladerf_enable_feature(self.dev[0], feature, enable)
+        _check_error(ret)
+        return ret
+    
     # Sample rate
 
     def set_sample_rate(self, ch, rate):
